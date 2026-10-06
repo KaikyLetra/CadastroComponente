@@ -29,4 +29,11 @@ public class ComponenteController {
         componenteService.deletarComponentePorArmazenamento(armazenamento);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping
+    public ResponseEntity<Void> atualizarComponentePorId(@RequestParam Integer id,
+                                                         @RequestBody Componente componente){
+        componenteService.atualizarComponentePorId(id, componente);
+        return ResponseEntity.ok().build();
+    }
 }

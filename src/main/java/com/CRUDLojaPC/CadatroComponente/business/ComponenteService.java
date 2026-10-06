@@ -27,7 +27,7 @@ public class ComponenteService {
         repository.deleteByArmazenamento(armazenamento);
     }
 
-    public void atualizarComponenteId(Integer id, Componente componente){
+    public void atualizarComponentePorId(Integer id, Componente componente){
         Componente componenteEntity = repository.findById(id).orElseThrow( () ->
                 new RuntimeException("Componente não encontrado"));
         Componente componenteAtualizado = Componente.builder()
