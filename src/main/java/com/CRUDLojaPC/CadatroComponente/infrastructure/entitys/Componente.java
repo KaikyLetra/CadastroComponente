@@ -22,10 +22,10 @@ public class Componente {
     @Column(name = "gabinete")
     private String gabinete;
 
-    @Column(name = "cpu", unique = true)
+    @Column(name = "cpu")
     private String cpu;
 
-    @Column(name = "gpu", unique = true)
+    @Column(name = "gpu")
     private String gpu;
 
     @Column(name = "ram")

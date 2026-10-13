@@ -27,8 +27,8 @@ public class ComponenteService {
         repository.deleteByArmazenamento(armazenamento);
     }
 
-    public void atualizarComponentePorId(Integer id, Componente componente){
-        Componente componenteEntity = repository.findById(id).orElseThrow( () ->
+    public void atualizarComponentePorId(Integer idPC, Componente componente){
+        Componente componenteEntity = repository.findById(idPC).orElseThrow( () ->
                 new RuntimeException("Componente não encontrado"));
         Componente componenteAtualizado = Componente.builder()
                 .nome(componente.getNome() != null ? componente.getNome() :
@@ -38,7 +38,7 @@ public class ComponenteService {
                 .cpu(componente.getCpu() != null ? componente.getCpu() :
                         componenteEntity.getCpu())
                 .gpu(componente.getGpu() != null ? componente.getGpu() :
-                        componenteEntity.getNome())
+                        componenteEntity.getGpu())
                 .ram(componente.getRam() != null ? componente.getRam() :
                         componenteEntity.getRam())
                 .dualchannel(componente.getDualchannel() != null ? componente.getDualchannel() :
