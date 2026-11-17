@@ -1,0 +1,60 @@
+/* Estilos gerais da página */
+body {
+    background-color: #f4f6f9;
+    color: #212529;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Card principal da aplicação */
+.main-card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+/* Estilização das abas de navegação */
+.nav-tabs .nav-link {
+    color: #495057;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.75rem 1.15rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.04);
+}
+
+.nav-tabs .nav-link.active {
+    color: #0d6efd;
+    background-color: transparent;
+    border-bottom: 3px solid #0d6efd;
+}
+
+.nav-tabs .nav-link.text-danger.active {
+    color: #dc3545 !important;
+    border-bottom-color: #dc3545;
+}
+
+/* Ajustes nos campos de formulário */
+.form-label {
+    font-weight: 500;
+    font-size: 0.92rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* Card de resultado da busca */
+#resultado-busca {
+    border-radius: 0.6rem;
+    transition: opacity 0.25s ease;
+}
+
+#resultado-busca small {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}

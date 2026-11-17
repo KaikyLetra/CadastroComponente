@@ -32,13 +32,13 @@ public class Componente {
     private String ram;
 
     @Column(name = "dualchannel")
-    private String dualchannel;
+    private Boolean dualchannel;
 
     @Column(name = "armazenamento")
     private String armazenamento;
 
     @Column(name = "bluetooth")
-    private String bluetooth;
+    private Boolean bluetooth;
 
 
 

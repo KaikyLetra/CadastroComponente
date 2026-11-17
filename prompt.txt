@@ -1,0 +1,46 @@
+Crie APENAS os arquivos do frontend (index.html, style.css e script.js) para uma aplicação web de gerenciamento de estoque de computadores de uma loja, utilizando HTML5, CSS3 (com Bootstrap 5 via CDN) e JavaScript puro (usando Fetch API).
+
+Regras importantes antes de gerar o código:
+- NÃO altere, reescreva ou sugira mudanças no código Java do backend. O backend já está pronto e funcionando localmente em Spring Boot + PostgreSQL na URL base: http://localhost:8080/componente
+- NENHUM campo digitado pelo usuário é único (unique). Vários computadores diferentes podem ter exatamente o mesmo nome, mesmo armazenamento, mesma CPU, etc. Apenas o idPC (gerado automaticamente pelo banco) é único. Portanto, não faça nenhuma validação bloqueando valores repetidos.
+- No formulário de cadastro, os campos de texto são obrigatórios (required) apenas para não serem enviados em branco, mas podem repetir valores de outros cadastros.
+
+Atributos da entidade Componente (JSON):
+- idPC (Integer, gerado automaticamente pelo banco; usado apenas para exibição na busca e como referência na atualização)
+- nome (String)
+- gabinete (String)
+- cpu (String)
+- gpu (String)
+- ram (String)
+- dualchannel (Boolean)
+- armazenamento (String)
+- bluetooth (Boolean)
+
+Endpoints do ComponenteController (implemente apenas estas 4 operações):
+Observação: meu backend não possui método para listar todos os registros (findAll), então a página não deve tentar carregar uma lista automática ao abrir.
+
+1. Cadastrar computador (POST):
+- Rota: POST http://localhost:8080/componente
+- Envia no corpo da requisição (JSON) os dados: nome, gabinete, cpu, gpu, ram, dualchannel, armazenamento e bluetooth (não enviar idPC).
+- O backend retorna apenas status 200 OK com corpo vazio (ResponseEntity<Void>), então não tente executar response.json() nesta chamada.
+
+2. Buscar computador por armazenamento (GET):
+- Rota: GET http://localhost:8080/componente?armazenamento={valor} (enviado via query param com encodeURIComponent).
+- O backend retorna um único objeto JSON Componente, que deve ser exibido na tela com todos os seus dados, incluindo o idPC.
+- Caso o armazenamento não exista, o backend lança uma RuntimeException (erro 500). Trate esse erro no JavaScript para exibir um alerta amigável na tela informando que o computador não foi encontrado.
+
+3. Atualizar computador por ID (PUT):
+- Rota: PUT http://localhost:8080/componente?id={idPC} (atenção: na URL o parâmetro se chama "id", enquanto no JSON o campo é "idPC").
+- Envia no corpo da requisição (JSON) os dados para atualização. No backend, qualquer campo que chegar como null mantém o valor antigo que já estava no banco. Por isso, no formulário de edição, não coloque os campos como required: se o usuário deixar um campo de texto em branco, envie null no JSON (nunca string vazia ""). Para dualchannel e bluetooth na edição, use um select com as opções "Manter atual" (envia null), "Sim" (envia true) e "Não" (envia false).
+- O backend retorna apenas status 200 OK com corpo vazio.
+
+4. Deletar computador por armazenamento (DELETE):
+- Rota: DELETE http://localhost:8080/componente?armazenamento={valor} (enviado via query param com encodeURIComponent).
+- O backend retorna apenas status 200 OK com corpo vazio.
+
+Interface e organização do código:
+- Crie uma interface limpa e responsiva com abas ou cards separados para: Cadastrar, Buscar, Atualizar e Deletar.
+- No cadastro, use checkboxes ou switches para dualchannel e bluetooth; na exibição da busca, mostre "Sim" ou "Não".
+- No card de resultado da busca, inclua botões rápidos para preencher automaticamente o ID no formulário de atualização ou para deletar o registro.
+- Exiba mensagens claras de sucesso ou erro na tela após cada requisição HTTP.
+- Deixe o script.js bem comentado explicando o funcionamento de cada chamada fetch, os verbos HTTP e o envio/recebimento dos dados.

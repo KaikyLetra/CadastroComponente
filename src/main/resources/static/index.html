@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Estoque - Computadores</title>
+    <!-- Bootstrap 5 CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Cabeçalho da Aplicação -->
+<nav class="navbar navbar-dark bg-dark shadow-sm mb-4">
+    <div class="container">
+            <span class="navbar-brand mb-0 h1 d-flex align-items-center gap-2">
+                <i class="bi bi-pc-display text-info"></i>
+                <span>Estoque TechStore — Gerenciamento de Computadores</span>
+            </span>
+    </div>
+</nav>
+
+<main class="container pb-5">
+    <!-- Área Global de Alertas (Feedback de Sucesso ou Erro das Requisições) -->
+    <div id="alert-container" class="mb-3"></div>
+
+    <!-- Card Principal com Navegação por Abas -->
+    <div class="card main-card shadow-sm border-0">
+        <div class="card-header bg-white border-bottom pt-3 px-3 px-md-4">
+            <ul class="nav nav-tabs card-header-tabs" id="estoqueTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fw-semibold" id="tab-cadastrar" data-bs-toggle="tab" data-bs-target="#pane-cadastrar" type="button" role="tab" aria-controls="pane-cadastrar" aria-selected="true">
+                        <i class="bi bi-plus-circle me-1"></i> Cadastrar
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold" id="tab-buscar" data-bs-toggle="tab" data-bs-target="#pane-buscar" type="button" role="tab" aria-controls="pane-buscar" aria-selected="false">
+                        <i class="bi bi-search me-1"></i> Buscar
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold" id="tab-atualizar" data-bs-toggle="tab" data-bs-target="#pane-atualizar" type="button" role="tab" aria-controls="pane-atualizar" aria-selected="false">
+                        <i class="bi bi-pencil-square me-1"></i> Atualizar
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold text-danger" id="tab-deletar" data-bs-toggle="tab" data-bs-target="#pane-deletar" type="button" role="tab" aria-controls="pane-deletar" aria-selected="false">
+                        <i class="bi bi-trash me-1"></i> Deletar
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="tab-content" id="estoqueTabsContent">
+
+                <!-- ========================================================= -->
+                <!-- ABA 1: CADASTRAR COMPUTADOR (POST)                        -->
+                <!-- ========================================================= -->
+                <div class="tab-pane fade show active" id="pane-cadastrar" role="tabpanel" aria-labelledby="tab-cadastrar" tabindex="0">
+                    <h5 class="card-title mb-1">Cadastrar Novo Computador</h5>
+                    <p class="text-muted small mb-4">Preencha todas as especificações técnicas para adicionar o equipamento ao estoque.</p>
+
+                    <form id="form-cadastrar">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="cad-nome" class="form-label">Nome / Modelo <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cad-nome" placeholder="Ex: PC Gamer Starter" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cad-gabinete" class="form-label">Gabinete <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cad-gabinete" placeholder="Ex: Mid Tower ATX Vidro Temperado" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cad-cpu" class="form-label">Processador (CPU) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cad-cpu" placeholder="Ex: Intel Core i5-12400F" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cad-gpu" class="form-label">Placa de Vídeo (GPU) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cad-gpu" placeholder="Ex: NVIDIA GeForce RTX 3060 12GB" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cad-ram" class="form-label">Memória RAM <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cad-ram" placeholder="Ex: 16GB DDR4 3200MHz" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cad-armazenamento" class="form-label">Armazenamento <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="cad-armazenamento" placeholder="Ex: SSD NVMe 512GB" required>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <div class="d-flex flex-wrap gap-4 p-3 bg-light rounded border">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="cad-dualchannel">
+                                        <label class="form-check-label fw-medium" for="cad-dualchannel">Memória em Dual Channel</label>
+                                    </div>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="cad-bluetooth">
+                                        <label class="form-check-label fw-medium" for="cad-bluetooth">Possui Bluetooth</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="bi bi-check-lg me-1"></i> Cadastrar Computador
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary ms-2">Limpar Campos</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA 2: BUSCAR COMPUTADOR POR ARMAZENAMENTO (GET)          -->
+                <!-- ========================================================= -->
+                <div class="tab-pane fade" id="pane-buscar" role="tabpanel" aria-labelledby="tab-buscar" tabindex="0">
+                    <h5 class="card-title mb-1">Buscar Computador por Armazenamento</h5>
+                    <p class="text-muted small mb-4">Informe a especificação exata do armazenamento para localizar o registro no banco de dados.</p>
+
+                    <form id="form-buscar" class="row g-2 align-items-end mb-4">
+                        <div class="col-md-8 col-lg-6">
+                            <label for="busca-armazenamento" class="form-label">Armazenamento <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="busca-armazenamento" placeholder="Ex: SSD NVMe 512GB" required>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-search me-1"></i> Buscar
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Card de Resultado da Busca (Inicialmente Oculto) -->
+                    <div id="resultado-busca" class="card border-primary-subtle bg-light d-none">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold">
+                                    <i class="bi bi-cpu me-1"></i> Computador Encontrado
+                                </span>
+                            <span class="badge bg-light text-primary fs-6" id="res-id">ID: #0</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Nome / Modelo</small>
+                                    <span class="fw-semibold" id="res-nome">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Gabinete</small>
+                                    <span class="fw-semibold" id="res-gabinete">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Processador (CPU)</small>
+                                    <span class="fw-semibold" id="res-cpu">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Placa de Vídeo (GPU)</small>
+                                    <span class="fw-semibold" id="res-gpu">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Memória RAM</small>
+                                    <span class="fw-semibold" id="res-ram">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Armazenamento</small>
+                                    <span class="fw-semibold" id="res-armazenamento">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Dual Channel</small>
+                                    <span class="fw-semibold" id="res-dualchannel">-</span>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <small class="text-muted d-block">Bluetooth</small>
+                                    <span class="fw-semibold" id="res-bluetooth">-</span>
+                                </div>
+                            </div>
+
+                            <hr class="my-3">
+
+                            <!-- Ações Rápidas para o Registro Encontrado -->
+                            <div class="d-flex flex-wrap gap-2">
+                                <button type="button" class="btn btn-warning btn-sm fw-semibold" id="btn-rapido-atualizar">
+                                    <i class="bi bi-pencil-square me-1"></i> Preencher ID na Atualização
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm fw-semibold" id="btn-rapido-deletar">
+                                    <i class="bi bi-trash me-1"></i> Deletar este Registro
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA 3: ATUALIZAR COMPUTADOR POR ID (PUT)                  -->
+                <!-- ========================================================= -->
+                <div class="tab-pane fade" id="pane-atualizar" role="tabpanel" aria-labelledby="tab-atualizar" tabindex="0">
+                    <h5 class="card-title mb-1">Atualizar Computador por ID</h5>
+                    <p class="text-muted small mb-4">
+                        Informe o <strong>ID (idPC)</strong> do computador. Campos deixados em branco ou marcados como <em>"Manter atual"</em> preservarão os valores já salvos no banco.
+                    </p>
+
+                    <form id="form-atualizar">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="upd-id" class="form-label">ID do Computador (idPC) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control border-warning" id="upd-id" min="1" placeholder="Ex: 1" required>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label for="upd-nome" class="form-label">Novo Nome / Modelo <span class="text-muted small">(opcional)</span></label>
+                                <input type="text" class="form-control" id="upd-nome" placeholder="Deixe em branco para manter o atual">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="upd-gabinete" class="form-label">Novo Gabinete <span class="text-muted small">(opcional)</span></label>
+                                <input type="text" class="form-control" id="upd-gabinete" placeholder="Deixe em branco para manter o atual">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="upd-cpu" class="form-label">Novo Processador (CPU) <span class="text-muted small">(opcional)</span></label>
+                                <input type="text" class="form-control" id="upd-cpu" placeholder="Deixe em branco para manter o atual">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="upd-gpu" class="form-label">Nova Placa de Vídeo (GPU) <span class="text-muted small">(opcional)</span></label>
+                                <input type="text" class="form-control" id="upd-gpu" placeholder="Deixe em branco para manter o atual">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="upd-ram" class="form-label">Nova Memória RAM <span class="text-muted small">(opcional)</span></label>
+                                <input type="text" class="form-control" id="upd-ram" placeholder="Deixe em branco para manter o atual">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="upd-armazenamento" class="form-label">Novo Armazenamento <span class="text-muted small">(opcional)</span></label>
+                                <input type="text" class="form-control" id="upd-armazenamento" placeholder="Deixe em branco para manter">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="upd-dualchannel" class="form-label">Dual Channel</label>
+                                <select class="form-select" id="upd-dualchannel">
+                                    <option value="" selected>Manter atual</option>
+                                    <option value="true">Sim</option>
+                                    <option value="false">Não</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="upd-bluetooth" class="form-label">Bluetooth</label>
+                                <select class="form-select" id="upd-bluetooth">
+                                    <option value="" selected>Manter atual</option>
+                                    <option value="true">Sim</option>
+                                    <option value="false">Não</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-warning fw-semibold px-4">
+                                    <i class="bi bi-save me-1"></i> Salvar Atualizações
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary ms-2">Limpar Formulário</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA 4: DELETAR COMPUTADOR POR ARMAZENAMENTO (DELETE)      -->
+                <!-- ========================================================= -->
+                <div class="tab-pane fade" id="pane-deletar" role="tabpanel" aria-labelledby="tab-deletar" tabindex="0">
+                    <h5 class="card-title text-danger mb-1">Deletar Computador por Armazenamento</h5>
+                    <p class="text-muted small mb-4">Informe o armazenamento correspondente ao equipamento que deseja remover do estoque.</p>
+
+                    <form id="form-deletar" class="row g-2 align-items-end">
+                        <div class="col-md-8 col-lg-6">
+                            <label for="del-armazenamento" class="form-label">Armazenamento <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control border-danger-subtle" id="del-armazenamento" placeholder="Ex: SSD NVMe 512GB" required>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <button type="submit" class="btn btn-danger w-100">
+                                <i class="bi bi-trash me-1"></i> Deletar Computador
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Bootstrap 5 JS Bundle via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Script da Aplicação -->
+<script src="script.js"></script>
+</body>
+</html>

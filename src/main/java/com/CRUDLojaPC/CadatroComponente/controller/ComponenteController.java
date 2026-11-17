@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/componente")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 
 public class ComponenteController {
     private final ComponenteService componenteService;
